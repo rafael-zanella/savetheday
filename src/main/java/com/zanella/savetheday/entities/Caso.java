@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -20,8 +22,7 @@ public class Caso {
     private Integer id;
     private String titulo;
     private String descricao;
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-    private Date dataPublicacao;
+    private LocalDateTime dataPublicacao;
     private Double valorArrecadado;
     private Double valorMeta;
 

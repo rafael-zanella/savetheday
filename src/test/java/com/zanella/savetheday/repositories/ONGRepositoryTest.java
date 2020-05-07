@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -108,7 +110,8 @@ class ONGRepositoryTest {
     @Test
     public void updateCasoReference() {
         ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        Caso caso = new Caso(null,"Tratamento","Cachorro atropelado precisa de tratamento", new Date("20/03/2020 12:45"),
+        Caso caso = new Caso(null,"Tratamento","Cachorro atropelado precisa de tratamento",
+                LocalDateTime.of(LocalDate.of(2020,03, 20), LocalTime.of(12,45)),
                 15.50, 200.00, Status.ABERTO, ong);
         ong.getCasos().addAll(Arrays.asList(caso));
 
