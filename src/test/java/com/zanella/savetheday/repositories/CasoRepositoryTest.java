@@ -59,7 +59,7 @@ class CasoRepositoryTest {
 
     @Test
     public void shouldSaveONGReference() {
-        ONG ong = new ONG(null, "ONG_NOME", new Date("20/05/1997 13:30"), "1234", "5133333333", "email@email.com", "123", null);
+        ONG ong = new ONG(null, "ONG_NOME", new Date("20/05/1997 13:30"), "02499010000149", "5133333333", "email@email.com", "123456789", null);
         Caso caso = new Caso(null,"Tratamento","Cachorro atropelado precisa de tratamento", new Date("20/03/2020 12:45"),
                 15.50, 200.00, Status.ABERTO, ong);
         ong.getCasos().addAll(Arrays.asList(caso));

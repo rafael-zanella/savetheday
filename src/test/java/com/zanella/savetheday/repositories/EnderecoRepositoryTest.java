@@ -60,7 +60,7 @@ class EnderecoRepositoryTest {
 
     @Test
     public void shouldSaveAnONGReference() {
-        ONG ong = new ONG(null, "ONG_NOME", new Date("20/05/1997 13:30"), "1234", "5133333333", "email@email.com", "123", null);
+        ONG ong = new ONG(null, "ONG_NOME", new Date("20/05/1997 13:30"), "02499010000149", "5133333333", "email@email.com", "123456789", null);
         Endereco endereco = new Endereco(null, UF, CIDADE, RUA, BAIRRO, COMPLEMENTO, NUMERO, CEP, ong);
         ong.setEndereco(endereco);
 

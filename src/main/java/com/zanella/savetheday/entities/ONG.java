@@ -5,8 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CNPJ;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,15 +24,22 @@ public class ONG {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank
     private String nome;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date dataFundacao;
+
+    @org.hibernate.validator.constraints.br.CNPJ
     private String CNPJ;
+
     private String telefone;
+
+    @Email
     private String email;
 
     @JsonIgnore
+    @Length(min = 8, max = 16)
     private String senha;
 
     @OneToOne(mappedBy = "ong", cascade = CascadeType.ALL)
