@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: test
+
+---
+## TEST PROFILE
+spring:
+  profiles: test
+  datasource:
+    password: ""
+    url: jdbc:h2:mem:testdb
+    username: sa
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
