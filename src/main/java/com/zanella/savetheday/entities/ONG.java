@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,8 +29,7 @@ public class ONG {
     @NotBlank
     private String nome;
 
-    //@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-    private Date dataFundacao;
+    private LocalDate dataFundacao;
 
     @org.hibernate.validator.constraints.br.CNPJ
     private String CNPJ;
@@ -50,7 +50,7 @@ public class ONG {
     @OneToMany(mappedBy = "ong", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Caso> casos = new ArrayList<>();
 
-    public ONG(Integer id, String nome, Date dataFundacao, String CNPJ, String telefone, String email, String senha, Endereco endereco) {
+    public ONG(Integer id, String nome, LocalDate dataFundacao, String CNPJ, String telefone, String email, String senha, Endereco endereco) {
         this.id = id;
         this.nome = nome;
         this.dataFundacao = dataFundacao;

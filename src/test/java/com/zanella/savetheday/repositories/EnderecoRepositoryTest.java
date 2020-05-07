@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -60,7 +61,7 @@ class EnderecoRepositoryTest {
 
     @Test
     public void shouldSaveAnONGReference() {
-        ONG ong = new ONG(null, "ONG_NOME", new Date("20/05/1997 13:30"), "02499010000149", "5133333333", "email@email.com", "123456789", null);
+        ONG ong = new ONG(null, "ONG_NOME", LocalDate.of(1997,05,20), "02499010000149", "5133333333", "email@email.com", "123456789", null);
         Endereco endereco = new Endereco(null, UF, CIDADE, RUA, BAIRRO, COMPLEMENTO, NUMERO, CEP, ong);
         ong.setEndereco(endereco);
 
