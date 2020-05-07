@@ -19,8 +19,7 @@ public class ONGService {
         Optional<ONG> obj = repository.findById(id);
         return obj.orElseThrow( () -> new ObjectNotFoundException("Object not found! " + "Id: " + id) );
     }
-
-
+    
     @Transactional( rollbackOn = Exception.class)
     public ONG add(ONG obj) {
         obj.setId(null);

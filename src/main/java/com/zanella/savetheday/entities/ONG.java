@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CNPJ;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -27,7 +28,7 @@ public class ONG {
     @NotBlank
     private String nome;
 
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    //@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date dataFundacao;
 
     @org.hibernate.validator.constraints.br.CNPJ
