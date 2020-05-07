@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,7 +20,11 @@ public class ONGService {
         Optional<ONG> obj = repository.findById(id);
         return obj.orElseThrow( () -> new ObjectNotFoundException("Object not found! " + "Id: " + id) );
     }
-    
+
+    public List<ONG> findAll() {
+        return repository.findAll();
+    }
+
     @Transactional( rollbackOn = Exception.class)
     public ONG add(ONG obj) {
         obj.setId(null);

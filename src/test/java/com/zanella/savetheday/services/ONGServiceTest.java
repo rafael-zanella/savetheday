@@ -38,4 +38,17 @@ class ONGServiceTest {
         assertNotNull(savedOng);
         assertEquals(LocalDate.of(1997,05,20), savedOng.getDataFundacao());
     }
+
+    @Test
+    void findAll() {
+        ONG ong1 = new ONG(null, "ong 1", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONG ong2 = new ONG(null, "ong 2", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONG ong3 = new ONG(null, "ong 3", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+
+        service.add(ong1);
+        service.add(ong2);
+        service.add(ong3);
+
+        assertEquals(3, service.findAll().size());
+    }
 }
