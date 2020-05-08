@@ -30,4 +30,26 @@ public class ONGService {
         obj.setId(null);
         return repository.save(obj);
     }
+
+    @Transactional( rollbackOn = Exception.class )
+    public ONG update(Integer id, ONG obj) {
+        ONG newObj = this.findById(id);
+        this.updateData(newObj, obj);
+        return repository.save(newObj);
+    }
+
+    private void updateData(ONG newObj, ONG obj) {
+        newObj.setDataFundacao(obj.getDataFundacao() != null ? obj.getDataFundacao() : newObj.getDataFundacao());
+        newObj.setCNPJ(obj.getCNPJ() != null ? obj.getCNPJ() : newObj.getCNPJ());
+        newObj.setTelefone(obj.getTelefone() != null ? obj.getTelefone() : newObj.getTelefone());
+        newObj.setEndereco(obj.getEndereco() != null ? obj.getEndereco() : newObj.getEndereco());
+
+        if( obj.getNome() != null ) {
+            newObj.setNome(obj.getNome());
+        }
+
+        if( obj.getSenha() != null ) {
+            newObj.setSenha(obj.getSenha());
+        }
+    }
 }
