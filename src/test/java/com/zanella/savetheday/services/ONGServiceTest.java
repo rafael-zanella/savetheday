@@ -1,5 +1,6 @@
 package com.zanella.savetheday.services;
 
+import com.zanella.savetheday.dto.ONGDto;
 import com.zanella.savetheday.entities.ONG;
 import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,9 +21,9 @@ class ONGServiceTest {
 
     @Test
     void successfulAddNewONG() {
-        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        service.add(ong);
-        assertNotNull(ong.getId());
+        ONGDto ongDto = new ONGDto("ONGONG", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONG saved = service.add(ongDto);
+        assertNotNull(saved.getId());
     }
 
     @Test
@@ -30,32 +33,40 @@ class ONGServiceTest {
 
     @Test
     void findByIdShouldReturnONG() {
-        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        service.add(ong);
-        ONG savedOng = service.findById(ong.getId());
+        ONGDto ongDto = new ONGDto("ONGONG", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONG savedOng = service.add(ongDto);
+        savedOng = service.findById(savedOng.getId());
         assertNotNull(savedOng);
         assertEquals(LocalDate.of(1997,5,20), savedOng.getDataFundacao());
     }
 
     @Test
     void findAll() {
-        ONG ong1 = new ONG(null, "ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        ONG ong2 = new ONG(null, "ong 2", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        ONG ong3 = new ONG(null, "ong 3", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONGDto ongDto1 = new ONGDto("ONG 1", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONGDto ongDto2 = new ONGDto("ONG 2", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONGDto ongDto3 = new ONGDto("ONG 3", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
 
-        service.add(ong1);
-        service.add(ong2);
-        service.add(ong3);
+        ONG ong1 = service.add(ongDto1);
+        ONG ong2 = service.add(ongDto2);
+        ONG ong3 = service.add(ongDto3);
 
-        assertEquals(3, service.findAll().size());
+        List<ONG> ongs = service.findAll();
+
+        assertEquals(ong1.getId(), ongs.get(0).getId());
+        assertEquals(ong2.getId(), ongs.get(1).getId());
+        assertEquals(ong3.getId(), ongs.get(2).getId());
+
+        assertEquals(3, ongs.size());
     }
 
     @Test
     void updateData() {
-        ONG ong1 = new ONG(null, "ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        ONG ong2 = new ONG(null, "ong 2", LocalDate.of(1998,5,20), null, null, "emaildois@email.com", "321321321",null);
-        service.add(ong1);
-        Integer id = ong1.getId();
+        ONGDto ong1 = new ONGDto("ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONGDto ong2 = new ONGDto("ong 2", LocalDate.of(1998,5,20), null, null, "emaildois@email.com", "321321321",null);
+
+        ONG saved = service.add(ong1);
+        Integer id = saved.getId();
+
         service.update(id, ong2);
         ONG updated = service.findById(id);
 
@@ -71,10 +82,10 @@ class ONGServiceTest {
 
     @Test
     void nameAndPasswordShouldNotBeNull() {
-        ONG ong1 = new ONG(null, "ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        ONG ong2 = new ONG(null, null, LocalDate.of(1998,5,20), null, null, "emaildois@email.com", null,null);
-        service.add(ong1);
-        Integer id = ong1.getId();
+        ONGDto ong1 = new ONGDto("ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONGDto ong2 = new ONGDto(null, LocalDate.of(1998,5,20), null, null, "emaildois@email.com", null,null);
+        ONG saved = service.add(ong1);
+        Integer id = saved.getId();
         service.update(id, ong2);
         ONG updated = service.findById(id);
 
@@ -90,11 +101,11 @@ class ONGServiceTest {
 
     @Test
     void fieldsNotInformedShouldNotUpdate() {
-        ONG ong1 = new ONG(null, "ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        ONG ong2 = new ONG();
+        ONGDto ong1 = new ONGDto("ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONGDto ong2 = new ONGDto();
         ong2.setSenha("7777777777");
-        service.add(ong1);
-        Integer id = ong1.getId();
+        ONG saved = service.add(ong1);
+        Integer id = saved.getId();
         service.update(id, ong2);
         ONG updated = service.findById(id);
 

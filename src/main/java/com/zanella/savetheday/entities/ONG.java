@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -61,4 +62,24 @@ public class ONG {
         this.endereco = endereco;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ONG ong = (ONG) o;
+        return id.equals(ong.id) &&
+                nome.equals(ong.nome) &&
+                Objects.equals(dataFundacao, ong.dataFundacao) &&
+                Objects.equals(CNPJ, ong.CNPJ) &&
+                Objects.equals(telefone, ong.telefone) &&
+                email.equals(ong.email) &&
+                senha.equals(ong.senha) &&
+                Objects.equals(endereco, ong.endereco) &&
+                Objects.equals(casos, ong.casos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, dataFundacao, CNPJ, telefone, email, senha, endereco, casos);
+    }
 }

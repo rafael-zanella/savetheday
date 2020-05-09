@@ -1,5 +1,6 @@
 package com.zanella.savetheday.services;
 
+import com.zanella.savetheday.dto.ONGDto;
 import com.zanella.savetheday.entities.ONG;
 import com.zanella.savetheday.repositories.ONGRepository;
 import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ONGService {
@@ -26,14 +28,16 @@ public class ONGService {
     }
 
     @Transactional( rollbackOn = Exception.class)
-    public ONG add(ONG obj) {
+    public ONG add(ONGDto dto) {
+        ONG obj = fromDto(dto);
         obj.setId(null);
         return repository.save(obj);
     }
 
     @Transactional( rollbackOn = Exception.class )
-    public ONG update(Integer id, ONG obj) {
-        ONG newObj = this.findById(id);
+    public ONG update(Integer id, ONGDto dto) {
+        ONG obj = fromDto(dto);
+        ONG newObj = findById(id);
         this.updateData(newObj, obj);
         return repository.save(newObj);
     }
@@ -43,13 +47,15 @@ public class ONGService {
         newObj.setCNPJ(obj.getCNPJ() != null ? obj.getCNPJ() : newObj.getCNPJ());
         newObj.setTelefone(obj.getTelefone() != null ? obj.getTelefone() : newObj.getTelefone());
         newObj.setEndereco(obj.getEndereco() != null ? obj.getEndereco() : newObj.getEndereco());
+        newObj.setNome(obj.getNome() != null ? obj.getNome() : newObj.getNome());
+        newObj.setSenha(obj.getSenha() != null ? obj.getSenha() : newObj.getSenha());
+    }
 
-        if( obj.getNome() != null ) {
-            newObj.setNome(obj.getNome());
-        }
-
-        if( obj.getSenha() != null ) {
-            newObj.setSenha(obj.getSenha());
-        }
+    private ONG fromDto(ONGDto dto) {
+        return new ONG(
+                null, dto.getNome(), dto.getDataFundacao(),
+                dto.getCNPJ(), dto.getTelefone(), dto.getEmail(),
+                dto.getSenha(), dto.getEndereco()
+        );
     }
 }
