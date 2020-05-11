@@ -3,10 +3,12 @@ package com.zanella.savetheday.services;
 import com.zanella.savetheday.dto.ONGDto;
 import com.zanella.savetheday.entities.ONG;
 import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
+import org.h2.constraint.Constraint;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +26,12 @@ class ONGServiceTest {
         ONGDto ongDto = new ONGDto("ONGONG", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
         ONG saved = service.add(ongDto);
         assertNotNull(saved.getId());
+    }
+
+    @Test
+    void failAddNewONGWithInvalidCNPJ() {
+        ONGDto ongDto = new ONGDto("ONGONG", LocalDate.of(1997, 5, 20), "0249901", "5533331146", "email@email.com", "123456789",null);
+        assertThrows(ConstraintViolationException.class, () -> service.add(ongDto));
     }
 
     @Test

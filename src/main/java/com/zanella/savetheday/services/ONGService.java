@@ -1,7 +1,9 @@
 package com.zanella.savetheday.services;
 
 import com.zanella.savetheday.dto.ONGDto;
+import com.zanella.savetheday.entities.Endereco;
 import com.zanella.savetheday.entities.ONG;
+import com.zanella.savetheday.repositories.EnderecoRepository;
 import com.zanella.savetheday.repositories.ONGRepository;
 import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +12,15 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ONGService {
 
     @Autowired
     private ONGRepository repository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     public ONG findById(Integer id) {
         Optional<ONG> obj = repository.findById(id);
@@ -31,7 +35,14 @@ public class ONGService {
     public ONG add(ONGDto dto) {
         ONG obj = fromDto(dto);
         obj.setId(null);
-        return repository.save(obj);
+        repository.save(obj);
+
+        if(dto.getEndereco() != null) {
+            dto.getEndereco().setOng(obj);
+            enderecoRepository.save(dto.getEndereco());
+        }
+
+        return obj;
     }
 
     @Transactional( rollbackOn = Exception.class )
@@ -51,7 +62,7 @@ public class ONGService {
         newObj.setSenha(obj.getSenha() != null ? obj.getSenha() : newObj.getSenha());
     }
 
-    private ONG fromDto(ONGDto dto) {
+    public ONG fromDto(ONGDto dto) {
         return new ONG(
                 null, dto.getNome(), dto.getDataFundacao(),
                 dto.getCNPJ(), dto.getTelefone(), dto.getEmail(),

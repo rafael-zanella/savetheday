@@ -2,6 +2,10 @@ package com.zanella.savetheday.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,21 +35,25 @@ public class ONG {
     @NotBlank
     private String nome;
 
+
+
     private LocalDate dataFundacao;
 
+    @NotBlank
     @org.hibernate.validator.constraints.br.CNPJ
     private String CNPJ;
 
     private String telefone;
 
+    @NotBlank
     @Email
     private String email;
 
-    @JsonIgnore
+    @NotBlank
     @Length(min = 8, max = 16)
     private String senha;
 
-    @OneToOne(mappedBy = "ong", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "ong", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Endereco endereco;
 
     @JsonIgnore

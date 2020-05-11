@@ -77,8 +77,11 @@ class ONGRepositoryTest {
     @Test
     public void shouldSaveEnderecoReference() {
         ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+
         Endereco endereco = new Endereco(null, "RS", "CIDADE", "RUA", "BAIRRO", "COMPLEMENTO", "NUMERO", "CEP", ong);
+
         ong.setEndereco(endereco);
+
         repository.save(ong);
         //enderecoRepository.save(endereco);
 
@@ -86,6 +89,7 @@ class ONGRepositoryTest {
 
         assert savedOng != null;
         assertEquals(endereco.getId(), savedOng.getEndereco().getId());
+        assertEquals(endereco.getOng().getId(), savedOng.getId());
     }
 
 
