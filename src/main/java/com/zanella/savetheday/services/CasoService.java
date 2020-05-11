@@ -41,7 +41,6 @@ public class CasoService {
         ong.getCasos().add(obj);
 
         repository.save(obj);
-
         return obj;
     }
 

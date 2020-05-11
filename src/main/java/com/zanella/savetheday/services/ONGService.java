@@ -35,13 +35,11 @@ public class ONGService {
     public ONG add(ONGDto dto) {
         ONG obj = fromDto(dto);
         obj.setId(null);
-        repository.save(obj);
 
         if(dto.getEndereco() != null) {
             dto.getEndereco().setOng(obj);
-            enderecoRepository.save(dto.getEndereco());
         }
-
+        repository.save(obj);
         return obj;
     }
 
