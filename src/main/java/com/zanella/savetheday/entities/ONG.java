@@ -36,8 +36,6 @@ public class ONG {
     @NotBlank
     private String nome;
 
-
-
     private LocalDate dataFundacao;
 
     @NotBlank

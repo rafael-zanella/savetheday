@@ -51,29 +51,13 @@ public class ONGDto {
     @Length(min = 8, max = 16)
     private String senha;
 
-    private Endereco endereco;
-
-    @JsonIgnore
-    private List<Caso> casos = new ArrayList<>();
-
-    public ONGDto(String nome, LocalDate dataFundacao, String CNPJ, String telefone, String email, String senha, Endereco endereco) {
+    public ONGDto(String nome, LocalDate dataFundacao, String CNPJ, String telefone, String email, String senha) {
         this.nome = nome;
         this.dataFundacao = dataFundacao;
         this.CNPJ = CNPJ;
         this.telefone = telefone;
         this.email = email;
         this.senha = senha;
-        this.endereco = endereco;
-    }
-
-    public ONGDto(ONG obj) {
-        this.nome = obj.getNome();
-        this.dataFundacao = obj.getDataFundacao();
-        this.CNPJ = obj.getCNPJ();
-        this.telefone = obj.getTelefone();
-        this.email = obj.getEmail();
-        this.senha = obj.getSenha();
-        this.endereco = obj.getEndereco();
     }
 
 }

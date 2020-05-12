@@ -4,9 +4,7 @@ import com.zanella.savetheday.dto.ONGDto;
 import com.zanella.savetheday.entities.ONG;
 import com.zanella.savetheday.repositories.ONGRepository;
 import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
-import org.h2.constraint.Constraint;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,14 +32,14 @@ class ONGServiceTest {
 
     @Test
     void successfulAddNewONG() {
-        ONGDto ongDto = new ONGDto("ONGONG", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONGDto ongDto = new ONGDto("ONGONG", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789");
         ONG saved = service.add(ongDto);
         assertNotNull(saved.getId());
     }
 
     @Test
     void failAddNewONGWithInvalidCNPJ() {
-        ONGDto ongDto = new ONGDto("ONGONG", LocalDate.of(1997, 5, 20), "0249901", "5533331146", "email@email.com", "123456789",null);
+        ONGDto ongDto = new ONGDto("ONGONG", LocalDate.of(1997, 5, 20), "0249901", "5533331146", "email@email.com", "123456789");
         assertThrows(ConstraintViolationException.class, () -> service.add(ongDto));
     }
 
@@ -52,7 +50,7 @@ class ONGServiceTest {
 
     @Test
     void findByIdShouldReturnONG() {
-        ONGDto ongDto = new ONGDto("ONGONG", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONGDto ongDto = new ONGDto("ONGONG", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789");
         ONG savedOng = service.add(ongDto);
         savedOng = service.findById(savedOng.getId());
         assertNotNull(savedOng);
@@ -61,9 +59,9 @@ class ONGServiceTest {
 
     @Test
     void findAll() {
-        ONGDto ongDto1 = new ONGDto("ONG 1", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        ONGDto ongDto2 = new ONGDto("ONG 2", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        ONGDto ongDto3 = new ONGDto("ONG 3", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONGDto ongDto1 = new ONGDto("ONG 1", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789");
+        ONGDto ongDto2 = new ONGDto("ONG 2", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789");
+        ONGDto ongDto3 = new ONGDto("ONG 3", LocalDate.of(1997, 5, 20), "02499010000149", "5533331146", "email@email.com", "123456789");
 
         ONG ong1 = service.add(ongDto1);
         ONG ong2 = service.add(ongDto2);
@@ -80,8 +78,8 @@ class ONGServiceTest {
 
     @Test
     void updateData() {
-        ONGDto ong1 = new ONGDto("ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        ONGDto ong2 = new ONGDto("ong 2", LocalDate.of(1998,5,20), null, null, "emaildois@email.com", "321321321",null);
+        ONGDto ong1 = new ONGDto("ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789");
+        ONGDto ong2 = new ONGDto("ong 2", LocalDate.of(1998,5,20), null, null, "emaildois@email.com", "321321321");
 
         ONG saved = service.add(ong1);
         Integer id = saved.getId();
@@ -101,8 +99,8 @@ class ONGServiceTest {
 
     @Test
     void nameAndPasswordShouldNotBeNull() {
-        ONGDto ong1 = new ONGDto("ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
-        ONGDto ong2 = new ONGDto(null, LocalDate.of(1998,5,20), null, null, "emaildois@email.com", null,null);
+        ONGDto ong1 = new ONGDto("ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789");
+        ONGDto ong2 = new ONGDto(null, LocalDate.of(1998,5,20), null, null, "emaildois@email.com", null);
         ONG saved = service.add(ong1);
         Integer id = saved.getId();
         service.update(id, ong2);
@@ -120,7 +118,7 @@ class ONGServiceTest {
 
     @Test
     void fieldsNotInformedShouldNotUpdate() {
-        ONGDto ong1 = new ONGDto("ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONGDto ong1 = new ONGDto("ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789");
         ONGDto ong2 = new ONGDto();
         ong2.setSenha("7777777777");
         ONG saved = service.add(ong1);

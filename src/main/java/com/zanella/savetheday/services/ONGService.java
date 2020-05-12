@@ -19,9 +19,6 @@ public class ONGService {
     @Autowired
     private ONGRepository repository;
 
-    @Autowired
-    private EnderecoRepository enderecoRepository;
-
     public ONG findById(Integer id) {
         Optional<ONG> obj = repository.findById(id);
         return obj.orElseThrow( () -> new ObjectNotFoundException("Object not found! " + "Id: " + id) );
@@ -36,9 +33,6 @@ public class ONGService {
         ONG obj = fromDto(dto);
         obj.setId(null);
 
-        if(dto.getEndereco() != null) {
-            dto.getEndereco().setOng(obj);
-        }
         repository.save(obj);
         return obj;
     }
@@ -64,7 +58,7 @@ public class ONGService {
         return new ONG(
                 null, dto.getNome(), dto.getDataFundacao(),
                 dto.getCNPJ(), dto.getTelefone(), dto.getEmail(),
-                dto.getSenha(), dto.getEndereco()
+                dto.getSenha(), null
         );
     }
 }
