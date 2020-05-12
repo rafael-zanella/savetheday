@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -20,10 +22,19 @@ public class Caso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotEmpty
     private String titulo;
+
+    @NotEmpty
     private String descricao;
+
+    @NotNull
     private LocalDateTime dataPublicacao;
+
     private Double valorArrecadado;
+
+    @NotNull
     private Double valorMeta;
 
     @Enumerated(EnumType.STRING)

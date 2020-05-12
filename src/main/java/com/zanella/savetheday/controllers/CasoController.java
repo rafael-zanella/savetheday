@@ -1,5 +1,6 @@
 package com.zanella.savetheday.controllers;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.zanella.savetheday.dto.CasoDto;
 import com.zanella.savetheday.entities.Caso;
 import com.zanella.savetheday.services.CasoService;

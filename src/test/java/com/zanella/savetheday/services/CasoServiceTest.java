@@ -7,6 +7,7 @@ import com.zanella.savetheday.entities.ONG;
 import com.zanella.savetheday.entities.enums.Status;
 import com.zanella.savetheday.repositories.CasoRepository;
 import com.zanella.savetheday.repositories.ONGRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,6 +30,12 @@ class CasoServiceTest {
     @Autowired
     private CasoRepository repository;
 
+    @AfterEach
+    void tearDown() {
+        ongRepository.deleteAll();
+        repository.deleteAll();
+    }
+
     @Test
     void findById() {
     }
@@ -46,7 +53,7 @@ class CasoServiceTest {
         Integer ongId = ong.getId();
 
         // Cria um caso e seta a ong criada
-        CasoDto casoDto = new CasoDto("titulo", "desc", LocalDateTime.of(LocalDate.of(2020,03, 20), LocalTime.of(12,45)), 50.0, 200.0, Status.ABERTO, ong);
+        CasoDto casoDto = new CasoDto("titulo", "desc", LocalDateTime.of(LocalDate.of(2020,03, 20), LocalTime.of(12,45)), 50.0, 200.0, ong);
         Caso savedCaso = service.add(casoDto);
         Integer casoId = savedCaso.getId();
 

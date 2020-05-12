@@ -23,10 +23,6 @@ public class CasoDto {
     private LocalDateTime dataPublicacao;
     private Double valorArrecadado;
     private Double valorMeta;
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
     private ONG ong;
 
     public CasoDto(Caso caso) {
@@ -35,7 +31,6 @@ public class CasoDto {
         this.dataPublicacao = caso.getDataPublicacao();
         this.valorArrecadado = caso.getValorArrecadado();
         this.valorMeta = caso.getValorMeta();
-        this.status = caso.getStatus();
         this.ong = caso.getOng();
     }
 }

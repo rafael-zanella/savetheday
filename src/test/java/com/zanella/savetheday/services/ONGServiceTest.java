@@ -2,8 +2,11 @@ package com.zanella.savetheday.services;
 
 import com.zanella.savetheday.dto.ONGDto;
 import com.zanella.savetheday.entities.ONG;
+import com.zanella.savetheday.repositories.ONGRepository;
 import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
 import org.h2.constraint.Constraint;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +23,14 @@ class ONGServiceTest {
 
     @Autowired
     private ONGService service;
+
+    @Autowired
+    private ONGRepository repository;
+
+    @AfterEach
+    void tearDown() {
+        repository.deleteAll();
+    }
 
     @Test
     void successfulAddNewONG() {
