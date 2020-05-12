@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -18,11 +19,20 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CasoDto {
 
+    @NotEmpty
     private String titulo;
+    @NotEmpty
     private String descricao;
+
+    @NotNull
     private LocalDateTime dataPublicacao;
+
     private Double valorArrecadado;
+
+    @NotNull
     private Double valorMeta;
+
+    @NotNull
     private ONG ong;
 
     public CasoDto(Caso caso) {
