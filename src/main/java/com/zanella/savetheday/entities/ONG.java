@@ -2,6 +2,7 @@ package com.zanella.savetheday.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -51,6 +52,7 @@ public class ONG {
 
     @NotBlank
     @Length(min = 8, max = 16)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
     @OneToOne(mappedBy = "ong", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
