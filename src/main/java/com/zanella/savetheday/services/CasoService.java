@@ -2,6 +2,7 @@ package com.zanella.savetheday.services;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.zanella.savetheday.dto.CasoDto;
+import com.zanella.savetheday.dto.ONGDto;
 import com.zanella.savetheday.entities.Caso;
 import com.zanella.savetheday.entities.ONG;
 import com.zanella.savetheday.entities.enums.Status;
@@ -45,6 +46,22 @@ public class CasoService {
         ong.getCasos().add(obj);
         repository.save(obj);
         return obj;
+    }
+
+    @Transactional( rollbackOn = Exception.class )
+    public Caso update(Integer id, CasoDto dto) {
+        Caso newCaso = this.fromDto(dto);
+        Caso caso = this.findById(id);
+        this.updateData(caso, newCaso);
+        return repository.save(caso);
+    }
+
+    private void updateData(Caso caso, Caso newCaso) {
+        caso.setTitulo(newCaso.getTitulo());
+        caso.setDescricao(newCaso.getDescricao());
+        caso.setDataPublicacao(newCaso.getDataPublicacao());
+        caso.setValorArrecadado(newCaso.getValorArrecadado());
+        caso.setValorMeta(newCaso.getValorMeta());
     }
 
 
