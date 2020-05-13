@@ -50,8 +50,8 @@ public class EnderecoService {
         Endereco endereco = this.findById(id);
         Endereco newData = this.fromDto(dto);
         this.updateData(endereco, newData);
-        ONG ong = ongService.findById(endereco.getOng().getId());
-        ong.setEndereco(endereco);
+//        ONG ong = ongService.findById(endereco.getOng().getId());
+//        ong.setEndereco(endereco);
         return repository.save(endereco);
     }
 
