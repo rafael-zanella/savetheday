@@ -31,7 +31,7 @@ public class EnderecoService {
         return repository.findAll();
     }
 
-    @Transactional( rollbackOn = Exception.class)
+    @Transactional( rollbackOn = Exception.class )
     public Endereco add(EnderecoDto dto) {
         Endereco obj = fromDto(dto);
         obj.setId(null);
@@ -44,6 +44,27 @@ public class EnderecoService {
         ong.setEndereco(obj);
         return repository.save(obj);
     }
+
+    @Transactional( rollbackOn = Exception.class )
+    public Endereco update(Integer id, EnderecoDto dto) {
+        Endereco endereco = this.findById(id);
+        Endereco newData = this.fromDto(dto);
+        this.updateData(endereco, newData);
+        ONG ong = ongService.findById(endereco.getOng().getId());
+        ong.setEndereco(endereco);
+        return repository.save(endereco);
+    }
+
+    private void updateData(Endereco endereco, Endereco newData) {
+        endereco.setUF(newData.getUF());
+        endereco.setCidade(newData.getCidade());
+        endereco.setRua(newData.getRua());
+        endereco.setBairro(newData.getBairro());
+        endereco.setComplemento(newData.getComplemento());
+        endereco.setNumero(newData.getNumero());
+        endereco.setCEP(newData.getCEP());
+    }
+
 
     public Endereco fromDto(EnderecoDto dto) {
         return new Endereco(null, dto.getUF(), dto.getCidade(), dto.getRua(), dto.getBairro(), dto.getComplemento(),

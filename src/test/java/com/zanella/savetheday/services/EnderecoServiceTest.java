@@ -65,4 +65,19 @@ class EnderecoServiceTest {
         assertEquals(ong.getId(), endereco.getOng().getId());
         assertEquals(endereco.getId(), ong.getEndereco().getId());
     }
+
+    @Test
+    void updateEndereco() {
+        ONGDto ongDto = new ONGDto("ong 1", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789");
+        ONG ong = ongService.add(ongDto);
+        EnderecoDto enderecoDto = new EnderecoDto("RS", "Porto Alegre", "Rua do comercio", "Pindorama", null, "1765", "94065000", ong);
+        Endereco endereco = service.add(enderecoDto);
+        EnderecoDto newEnderecoDto = new EnderecoDto("RS", "Ijuí", "Rua do comercio", "Pindorama", null, "1765", "94065000", null);
+
+        Endereco updated = service.update(endereco.getId(), newEnderecoDto);
+
+        ong = ongService.findById(ong.getId());
+        assertEquals(ong.getId(), updated.getOng().getId());
+        assertEquals(updated.getId(), ong.getEndereco().getId());
+    }
 }

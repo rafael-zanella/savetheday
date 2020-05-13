@@ -2,6 +2,8 @@ package com.zanella.savetheday.controllers;
 
 import com.zanella.savetheday.dto.EnderecoDto;
 import com.zanella.savetheday.dto.EnderecoResponseDto;
+import com.zanella.savetheday.dto.ONGDto;
+import com.zanella.savetheday.dto.ONGResponseDto;
 import com.zanella.savetheday.entities.Endereco;
 import com.zanella.savetheday.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +40,13 @@ public class EnderecoController {
     @PostMapping()
     public ResponseEntity<EnderecoResponseDto> add(@Valid @RequestBody EnderecoDto EnderecoDto) {
         EnderecoResponseDto responseDto = new EnderecoResponseDto(service.add(EnderecoDto));
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<EnderecoResponseDto> update(@PathVariable Integer id, @RequestBody EnderecoDto dto) {
+        EnderecoResponseDto responseDto = new EnderecoResponseDto(service.update(id, dto));
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
 
 }
