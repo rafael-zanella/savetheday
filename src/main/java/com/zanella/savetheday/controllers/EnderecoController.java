@@ -1,6 +1,7 @@
 package com.zanella.savetheday.controllers;
 
 import com.zanella.savetheday.dto.EnderecoDto;
+import com.zanella.savetheday.dto.EnderecoResponseDto;
 import com.zanella.savetheday.entities.Endereco;
 import com.zanella.savetheday.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,21 +23,21 @@ public class EnderecoController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<EnderecoDto> find(@PathVariable Integer id) {
+    public ResponseEntity<EnderecoResponseDto> find(@PathVariable Integer id) {
         Endereco obj = service.findById(id);
-        return new ResponseEntity<>(new EnderecoDto(obj), HttpStatus.OK);
+        return new ResponseEntity<>(new EnderecoResponseDto(obj), HttpStatus.OK);
     }
 
     @GetMapping()
-    public ResponseEntity<List<EnderecoDto>> findAll() {
+    public ResponseEntity<List<EnderecoResponseDto>> findAll() {
         List<Endereco> list = service.findAll();
-        List<EnderecoDto> enderecoDtoList = list.stream().map(obj -> new EnderecoDto(obj)).collect(Collectors.toList());
+        List<EnderecoResponseDto> enderecoDtoList = list.stream().map(obj -> new EnderecoResponseDto(obj)).collect(Collectors.toList());
         return new ResponseEntity<>(enderecoDtoList, HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<EnderecoDto> add(@Valid @RequestBody EnderecoDto EnderecoDto) {
-        EnderecoDto responseDto = new EnderecoDto(service.add(EnderecoDto));
+    public ResponseEntity<EnderecoResponseDto> add(@Valid @RequestBody EnderecoDto EnderecoDto) {
+        EnderecoResponseDto responseDto = new EnderecoResponseDto(service.add(EnderecoDto));
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
