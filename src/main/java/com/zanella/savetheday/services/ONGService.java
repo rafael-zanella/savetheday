@@ -49,7 +49,6 @@ public class ONGService {
         newObj.setDataFundacao(obj.getDataFundacao() != null ? obj.getDataFundacao() : newObj.getDataFundacao());
         newObj.setCNPJ(obj.getCNPJ() != null ? obj.getCNPJ() : newObj.getCNPJ());
         newObj.setTelefone(obj.getTelefone() != null ? obj.getTelefone() : newObj.getTelefone());
-        newObj.setEndereco(obj.getEndereco() != null ? obj.getEndereco() : newObj.getEndereco());
         newObj.setNome(obj.getNome() != null ? obj.getNome() : newObj.getNome());
         newObj.setSenha(obj.getSenha() != null ? obj.getSenha() : newObj.getSenha());
     }

@@ -41,8 +41,13 @@ public class ONGController {
     @PostMapping()
     public ResponseEntity<ONGResponseDto> add(@Valid @RequestBody ONGDto ongDto) {
         ONGResponseDto responseDto = new ONGResponseDto(service.add(ongDto));
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ONGResponseDto> update(@PathVariable Integer id, @RequestBody ONGDto dto) {
+        ONGResponseDto responseDto = new ONGResponseDto(service.update(id, dto));
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
 
 }
