@@ -2,6 +2,7 @@ package com.zanella.savetheday.controllers;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.zanella.savetheday.dto.CasoDto;
+import com.zanella.savetheday.dto.CasoResponseDto;
 import com.zanella.savetheday.entities.Caso;
 import com.zanella.savetheday.services.CasoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +24,21 @@ public class CasoController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<CasoDto> find(@PathVariable Integer id) {
+    public ResponseEntity<CasoResponseDto> find(@PathVariable Integer id) {
         Caso obj = service.findById(id);
-        return new ResponseEntity<>(new CasoDto(obj), HttpStatus.OK);
+        return new ResponseEntity<>(new CasoResponseDto(obj), HttpStatus.OK);
     }
 
     @GetMapping()
-    public ResponseEntity<List<CasoDto>> findAll() {
+    public ResponseEntity<List<CasoResponseDto>> findAll() {
         List<Caso> list = service.findAll();
-        List<CasoDto> casoDtoList = list.stream().map(obj -> new CasoDto(obj)).collect(Collectors.toList());
-        return new ResponseEntity<>(casoDtoList, HttpStatus.OK);
+        List<CasoResponseDto> casoResponseDtoList = list.stream().map(obj -> new CasoResponseDto(obj)).collect(Collectors.toList());
+        return new ResponseEntity<>(casoResponseDtoList, HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<CasoDto> add(@Valid @RequestBody CasoDto CasoDto) {
-        CasoDto responseDto = new CasoDto(service.add(CasoDto));
+    public ResponseEntity<CasoResponseDto> add(@Valid @RequestBody CasoDto CasoDto) {
+        CasoResponseDto responseDto = new CasoResponseDto(service.add(CasoDto));
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
