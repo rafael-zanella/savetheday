@@ -7,6 +7,7 @@ import com.zanella.savetheday.repositories.EnderecoRepository;
 import com.zanella.savetheday.repositories.ONGRepository;
 import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -45,6 +46,12 @@ public class ONGService {
         return repository.save(newObj);
     }
 
+    @Transactional( rollbackOn = Exception.class )
+    public void delete(Integer id) {
+        this.findById(id);
+        repository.deleteById(id);
+    }
+
     private void updateData(ONG newObj, ONG obj) {
         newObj.setDataFundacao(obj.getDataFundacao() != null ? obj.getDataFundacao() : newObj.getDataFundacao());
         newObj.setCNPJ(obj.getCNPJ() != null ? obj.getCNPJ() : newObj.getCNPJ());
@@ -60,4 +67,5 @@ public class ONGService {
                 dto.getSenha(), null
         );
     }
+
 }
