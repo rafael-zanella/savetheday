@@ -1,17 +1,13 @@
 package com.zanella.savetheday.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zanella.savetheday.entities.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor

@@ -1,6 +1,6 @@
-package com.zanella.savetheday.controllers.exceptions;
+package com.zanella.savetheday.services.exceptions;
 
-public class DataIntegrityException extends Throwable {
+public class DataIntegrityException extends RuntimeException {
 
     public DataIntegrityException(String message) {
         super(message);

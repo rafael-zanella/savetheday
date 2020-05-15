@@ -1,14 +1,10 @@
 package com.zanella.savetheday.dto;
 
 import com.zanella.savetheday.entities.Endereco;
-import com.zanella.savetheday.entities.ONG;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter

@@ -1,15 +1,11 @@
 package com.zanella.savetheday.services;
 
 import com.zanella.savetheday.dto.ONGDto;
-import com.zanella.savetheday.entities.Endereco;
 import com.zanella.savetheday.entities.ONG;
-import com.zanella.savetheday.repositories.EnderecoRepository;
 import com.zanella.savetheday.repositories.ONGRepository;
 import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,5 @@
 package com.zanella.savetheday.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zanella.savetheday.entities.Endereco;
 import com.zanella.savetheday.entities.ONG;
 import lombok.AllArgsConstructor;

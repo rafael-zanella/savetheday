@@ -1,10 +1,7 @@
 package com.zanella.savetheday.controllers;
 
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.zanella.savetheday.dto.CasoDto;
 import com.zanella.savetheday.dto.CasoResponseDto;
-import com.zanella.savetheday.dto.ONGDto;
-import com.zanella.savetheday.dto.ONGResponseDto;
 import com.zanella.savetheday.entities.Caso;
 import com.zanella.savetheday.services.CasoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +36,8 @@ public class CasoController {
     }
 
     @PostMapping()
-    public ResponseEntity<CasoResponseDto> add(@Valid @RequestBody CasoDto CasoDto) {
-        CasoResponseDto responseDto = new CasoResponseDto(service.add(CasoDto));
+    public ResponseEntity<CasoResponseDto> add(@Valid @RequestBody CasoDto casoDto) {
+        CasoResponseDto responseDto = new CasoResponseDto(service.add(casoDto));
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 

@@ -2,7 +2,6 @@ package com.zanella.savetheday.dto;
 
 import com.zanella.savetheday.entities.Caso;
 import com.zanella.savetheday.entities.ONG;
-import com.zanella.savetheday.entities.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

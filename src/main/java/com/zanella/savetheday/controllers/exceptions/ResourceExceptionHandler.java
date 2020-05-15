@@ -1,6 +1,7 @@
 package com.zanella.savetheday.controllers.exceptions;
 
 
+import com.zanella.savetheday.services.exceptions.DataIntegrityException;
 import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
