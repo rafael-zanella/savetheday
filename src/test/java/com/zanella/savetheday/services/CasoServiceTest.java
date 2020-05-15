@@ -63,11 +63,28 @@ class CasoServiceTest {
         assertEquals(1, ong.getCasos().size());
         assertEquals(casoId, ong.getCasos().get(0).getId());
         assertEquals(ongId, savedCaso.getOng().getId());
-
-
     }
 
     @Test
-    void fromDto() {
+    void delete() {
+        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ongRepository.save(ong);
+
+        Integer ongId = ong.getId();
+
+        CasoDto casoDto = new CasoDto("titulo1", "desc", LocalDateTime.of(LocalDate.of(2020,03, 20), LocalTime.of(12,45)), 50.0, 200.0, ong);
+        Caso savedCaso = service.add(casoDto);
+
+        CasoDto casoDto1 = new CasoDto("titulo2", "desc", LocalDateTime.of(LocalDate.of(2020,03, 20), LocalTime.of(12,45)), 50.0, 200.0, ong);
+        Caso savedCaso1 = service.add(casoDto1);
+
+        service.delete(savedCaso.getId());
+
+        ong = ongRepository.findById(ongId).orElse(null);
+        assert ong != null;
+        assertEquals(1, ong.getCasos().size());
+        assertEquals("titulo2", ong.getCasos().get(0).getTitulo());
     }
+
+
 }

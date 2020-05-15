@@ -50,5 +50,11 @@ public class CasoController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
+    @DeleteMapping( value = "/delete/{id}" )
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        service.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 
 }
