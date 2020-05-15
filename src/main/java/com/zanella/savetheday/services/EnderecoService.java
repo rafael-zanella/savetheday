@@ -8,7 +8,6 @@ import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
 import com.zanella.savetheday.services.exceptions.OngAddressException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -50,9 +49,17 @@ public class EnderecoService {
         Endereco endereco = this.findById(id);
         Endereco newData = this.fromDto(dto);
         this.updateData(endereco, newData);
-//        ONG ong = ongService.findById(endereco.getOng().getId());
-//        ong.setEndereco(endereco);
         return repository.save(endereco);
+    }
+
+    @Transactional( rollbackOn = Exception.class )
+    public void delete(Integer id) {
+        Endereco endereco = this.findById(id);
+
+        ONG ong = ongService.findById(endereco.getOng().getId());
+        ong.setEndereco(null);
+
+        repository.deleteById(id);
     }
 
     private void updateData(Endereco endereco, Endereco newData) {
@@ -64,7 +71,6 @@ public class EnderecoService {
         endereco.setNumero(newData.getNumero());
         endereco.setCEP(newData.getCEP());
     }
-
 
     public Endereco fromDto(EnderecoDto dto) {
         return new Endereco(null, dto.getUF(), dto.getCidade(), dto.getRua(), dto.getBairro(), dto.getComplemento(),

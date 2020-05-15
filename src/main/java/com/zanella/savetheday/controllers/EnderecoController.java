@@ -2,8 +2,6 @@ package com.zanella.savetheday.controllers;
 
 import com.zanella.savetheday.dto.EnderecoDto;
 import com.zanella.savetheday.dto.EnderecoResponseDto;
-import com.zanella.savetheday.dto.ONGDto;
-import com.zanella.savetheday.dto.ONGResponseDto;
 import com.zanella.savetheday.entities.Endereco;
 import com.zanella.savetheday.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,4 +46,9 @@ public class EnderecoController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        service.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
