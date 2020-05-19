@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -47,7 +48,7 @@ class ONGRepositoryTest {
 
     @Test
     public void shouldPersistData() {
-        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
         repository.save(ong);
         ONG savedONG = repository.findById(ong.getId()).orElse(null);
         assertNotNull(savedONG);
@@ -55,7 +56,7 @@ class ONGRepositoryTest {
 
     @Test
     public void shouldUpdateData() {
-        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
         repository.save(ong);
         Integer id = ong.getId();
         ong.setNome("NOVO NOME DA ONG");
@@ -66,7 +67,7 @@ class ONGRepositoryTest {
 
     @Test
     public void ShouldDeleteData() {
-        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
         repository.save(ong);
 
         assertEquals(1, repository.count());
@@ -76,7 +77,7 @@ class ONGRepositoryTest {
 
     @Test
     public void shouldSaveEnderecoReference() {
-        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
 
         Endereco endereco = new Endereco(null, "RS", "CIDADE", "RUA", "BAIRRO", "COMPLEMENTO", "NUMERO", "CEP", ong);
 
@@ -95,7 +96,7 @@ class ONGRepositoryTest {
 
     @Test
     public void updateEnderecoReference() {
-        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
         Endereco endereco = new Endereco(null, "RS", "CIDADE", "RUA", "BAIRRO", "COMPLEMENTO", "NUMERO", "CEP", ong);
         ong.setEndereco(endereco);
         repository.save(ong);
@@ -112,10 +113,11 @@ class ONGRepositoryTest {
 
 
     @Test
+    @Transactional
     public void updateCasoReference() {
-        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+        ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
         Caso caso = new Caso(null,"Tratamento","Cachorro atropelado precisa de tratamento",
-                LocalDateTime.of(LocalDate.of(2020,03, 20), LocalTime.of(12,45)),
+                LocalDateTime.of(LocalDate.of(2020,3, 20), LocalTime.of(12,45)),
                 15.50, 200.00, Status.ABERTO, ong);
         ong.getCasos().addAll(Arrays.asList(caso));
 
@@ -129,7 +131,5 @@ class ONGRepositoryTest {
 
         assert savedOng != null;
         assertEquals("Titulo atualizado", savedOng.getCasos().get(0).getTitulo());
-
-
     }
 }

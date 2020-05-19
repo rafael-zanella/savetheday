@@ -7,11 +7,13 @@ import com.zanella.savetheday.entities.ONG;
 import com.zanella.savetheday.entities.enums.Status;
 import com.zanella.savetheday.repositories.CasoRepository;
 import com.zanella.savetheday.repositories.ONGRepository;
+import org.hibernate.Hibernate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -37,14 +39,7 @@ class CasoServiceTest {
     }
 
     @Test
-    void findById() {
-    }
-
-    @Test
-    void findAll() {
-    }
-
-    @Test
+    @Transactional
     void add() {
         // Cria uma ong no banco
         ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
@@ -66,6 +61,7 @@ class CasoServiceTest {
     }
 
     @Test
+    @Transactional
     void delete() {
         ONG ong = new ONG(null, "ONGONG", LocalDate.of(1997,05,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
         ongRepository.save(ong);

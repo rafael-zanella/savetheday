@@ -48,7 +48,7 @@ public class ONG {
     private Endereco endereco;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "ong", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "ong", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Caso> casos = new ArrayList<>();
 
     public ONG(Integer id, String nome, LocalDate dataFundacao, String CNPJ, String telefone, String email, String senha, Endereco endereco) {
