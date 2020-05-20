@@ -30,6 +30,10 @@ public class CasoService {
         return repository.findAll();
     }
 
+    public List<Caso> findAllByCidade(String cidade) {
+        return repository.findAllByOng_Endereco_CidadeContaining(cidade);
+    }
+
     @Transactional( rollbackOn = Exception.class)
     public Caso add(CasoDto dto) {
         Caso obj = fromDto(dto);
@@ -74,4 +78,5 @@ public class CasoService {
                 dto.getValorMeta(), null, dto.getOng()
         );
     }
+
 }

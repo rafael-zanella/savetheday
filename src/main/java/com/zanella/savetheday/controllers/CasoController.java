@@ -35,6 +35,13 @@ public class CasoController {
         return new ResponseEntity<>(casoResponseDtoList, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/cidade/{cidade}")
+    public ResponseEntity<List<CasoResponseDto>> findAllByCidade(@PathVariable String cidade) {
+        List<Caso> list = service.findAllByCidade(cidade);
+        List<CasoResponseDto> casoResponseDtoList = list.stream().map(obj -> new CasoResponseDto(obj)).collect(Collectors.toList());
+        return new ResponseEntity<>(casoResponseDtoList, HttpStatus.OK);
+    }
+
     @PostMapping()
     public ResponseEntity<CasoResponseDto> add(@Valid @RequestBody CasoDto casoDto) {
         CasoResponseDto responseDto = new CasoResponseDto(service.add(casoDto));
