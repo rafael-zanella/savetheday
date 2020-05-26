@@ -18,6 +18,7 @@ public class ONGResponseDto {
     private String CNPJ;
     private String telefone;
     private String email;
+    private String foto;
     private Endereco endereco;
 
     public ONGResponseDto(ONG obj) {
@@ -27,6 +28,7 @@ public class ONGResponseDto {
         this.CNPJ = obj.getCNPJ();
         this.telefone = obj.getTelefone();
         this.email = obj.getEmail();
+        this.foto = obj.getFoto();
         this.endereco = obj.getEndereco();
     }
 

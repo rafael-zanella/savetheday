@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +47,13 @@ public class ONGController {
         ONGResponseDto responseDto = new ONGResponseDto(service.update(id, dto));
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/{id}/picture")
+    public ResponseEntity<ONGResponseDto> updatePicture(@PathVariable Integer id, @RequestParam(name = "file")MultipartFile file) {
+        ONGResponseDto responseDto = new ONGResponseDto(service.updatePicture(id, file));
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {

@@ -5,16 +5,30 @@ import com.zanella.savetheday.entities.ONG;
 import com.zanella.savetheday.repositories.ONGRepository;
 import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.transaction.Transactional;
+import java.awt.image.BufferedImage;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ONGService {
 
+    @Value("${img.prefix.client.profile}")
+    private String prefix;
+
     @Autowired
     private ONGRepository repository;
+
+    @Autowired
+    private AmazonS3Service amazonS3Service;
+
+    @Autowired
+    private ImageService imageService;
 
     public ONG findById(Integer id) {
         Optional<ONG> obj = repository.findById(id);
@@ -40,6 +54,19 @@ public class ONGService {
         ONG newObj = findById(id);
         this.updateData(newObj, obj);
         return repository.save(newObj);
+    }
+
+    @Transactional
+    public ONG updatePicture(Integer id, MultipartFile multipartFile) {
+        ONG ong = this.findById(id);
+
+        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+        String fileName = prefix + ong.getId() + ".jpg";
+
+        URI uri = amazonS3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+
+        ong.setFoto(uri.toString());
+        return repository.save(ong);
     }
 
     @Transactional( rollbackOn = Exception.class )
