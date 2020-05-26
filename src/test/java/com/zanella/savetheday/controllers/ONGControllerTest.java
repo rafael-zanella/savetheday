@@ -1,8 +1,5 @@
 package com.zanella.savetheday.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.zanella.savetheday.Util;
 import com.zanella.savetheday.dto.ONGDto;
 import com.zanella.savetheday.entities.ONG;
@@ -15,16 +12,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,7 +38,9 @@ class ONGControllerTest {
     void returnAllONGs() throws Exception {
         ONG ong1 = new ONG(1, "ONGONG", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
         ONG ong2 = new ONG(2, "ONGONG 2", LocalDate.of(1997,5,20), "02499010000149", "5533331146", "email@email.com", "123456789",null);
+
         when(this.service.findAll()).thenReturn(Arrays.asList(ong1, ong2));
+
         mockMvc.perform(get("/ong/"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[*]").isArray())
@@ -79,6 +73,31 @@ class ONGControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.senha").doesNotExist());
+    }
+
+    @Test
+    void updateONG() throws Exception {
+        ONG ong = new ONG(1, "ong 4", LocalDate.of(2018, 5, 13), "02499010000149", "5133331146", "email@email.com", "123456789",null);
+        ONGDto dto = new ONGDto("ong 4", LocalDate.of(2018, 5, 13), "02499010000149", "5133331146", "email@email.com", "123456789");
+        String data = Util.ObjectToJsonStr(dto);
+
+        when(this.service.update(ArgumentMatchers.eq(1), ArgumentMatchers.any(ONGDto.class))).thenReturn(ong);
+
+        mockMvc.perform(put("/ong/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(data))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.nome").value("ong 4"))
+                .andExpect(jsonPath("$.senha").doesNotExist());
+    }
+
+    @Test
+    void deleteONG() throws Exception {
+        doNothing().when(this.service).delete(1);
+
+        mockMvc.perform(delete("/ong/delete/1"))
+                .andExpect(status().isNoContent());
     }
 
 }
