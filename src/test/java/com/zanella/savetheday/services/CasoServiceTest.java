@@ -1,13 +1,10 @@
 package com.zanella.savetheday.services;
 
 import com.zanella.savetheday.dto.CasoDto;
-import com.zanella.savetheday.dto.ONGResponseDto;
 import com.zanella.savetheday.entities.Caso;
 import com.zanella.savetheday.entities.ONG;
-import com.zanella.savetheday.entities.enums.Status;
 import com.zanella.savetheday.repositories.CasoRepository;
 import com.zanella.savetheday.repositories.ONGRepository;
-import org.hibernate.Hibernate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +78,5 @@ class CasoServiceTest {
         assertEquals(1, ong.getCasos().size());
         assertEquals("titulo2", ong.getCasos().get(0).getTitulo());
     }
-
 
 }

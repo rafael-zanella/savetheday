@@ -34,6 +34,7 @@ public class ONG {
     private String CNPJ;
 
     private String telefone;
+    private String foto;
 
     @NotBlank
     @Email

@@ -2,6 +2,7 @@ package com.zanella.savetheday.controllers.exceptions;
 
 
 import com.zanella.savetheday.services.exceptions.DataIntegrityException;
+import com.zanella.savetheday.services.exceptions.FileException;
 import com.zanella.savetheday.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,12 @@ public class ResourceExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<StandardError> notSupportedHttpRequest(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
         StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage() + ". Check the URL: " + request.getRequestURL(), System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
+    @ExceptionHandler(FileException.class)
+    public ResponseEntity<StandardError> fileNotSupported(FileException e, HttpServletRequest request) {
+        StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
