@@ -1,7 +1,10 @@
 spring:
   profiles:
     active: test
-
+img:
+  prefix:
+    client:
+      profile: op
 ---
 ## TEST PROFILE
 spring:
@@ -19,3 +22,31 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+s3:
+  bucket: save-the-day
+
+---
+## DEV PROFILE
+spring:
+  profiles: dev
+  datasource:
+    password: ""
+    url: jdbc:h2:mem:testdb
+    username: sa
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+s3:
+  bucket: <s3 buket>
+  region: <s3 region>
+
+aws:
+  access_key_id: <your key id>
+  secret_access_key: <your access key>
